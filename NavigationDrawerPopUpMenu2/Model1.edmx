@@ -1,0 +1,516 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище agentstvoModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Etap">
+          <Key>
+            <PropertyRef Name="IdEtap" />
+          </Key>
+          <Property Name="IdEtap" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="naimenovanieEtap" Type="nvarchar" MaxLength="50" />
+          <Property Name="DataNachala" Type="date" />
+          <Property Name="Vajnost" Type="nvarchar" MaxLength="50" />
+          <Property Name="StepenGotovnosti" Type="int" Nullable="false" />
+          <Property Name="ObimRabot" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Otvetstvenniy" Type="int" />
+          <Property Name="zadacha" Type="int" />
+        </EntityType>
+        <EntityType Name="Meneger">
+          <Key>
+            <PropertyRef Name="IdMeneger" />
+          </Key>
+          <Property Name="IdMeneger" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Imya" Type="nvarchar" MaxLength="50" />
+          <Property Name="Familya" Type="nvarchar" MaxLength="50" />
+          <Property Name="Otchestvo" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="meneger1">
+          <Key>
+            <PropertyRef Name="idmeneger1" />
+          </Key>
+          <Property Name="idmeneger1" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="familia" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="imya" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="otchestvo" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Otdel">
+          <Key>
+            <PropertyRef Name="IdOtdel" />
+          </Key>
+          <Property Name="IdOtdel" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ZadachaID" Type="int" Nullable="false" />
+          <Property Name="SotrydnikiId" Type="int" />
+          <Property Name="menegerid" Type="int" />
+          <Property Name="naimenovanie" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="otdel1">
+          <Key>
+            <PropertyRef Name="IDotdel1" />
+          </Key>
+          <Property Name="IDotdel1" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="menegerid1" Type="int" Nullable="false" />
+          <Property Name="Naimenovanie1" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="zadacha" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sotrydniki" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sotrydniki">
+          <Key>
+            <PropertyRef Name="IdSotr" />
+          </Key>
+          <Property Name="IdSotr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Familia" Type="nvarchar" MaxLength="50" />
+          <Property Name="Imya" Type="nvarchar" MaxLength="50" />
+          <Property Name="Otchestvo" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Zadacha">
+          <Key>
+            <PropertyRef Name="Idzadacha" />
+          </Key>
+          <Property Name="Idzadacha" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DataPost" Type="date" />
+          <Property Name="SrokVipl" Type="date" />
+          <Property Name="naimenovanie" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__otdel1__menegeri__4BAC3F29">
+          <End Role="meneger1" Type="Self.meneger1" Multiplicity="1" />
+          <End Role="otdel1" Type="Self.otdel1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="meneger1">
+              <PropertyRef Name="idmeneger1" />
+            </Principal>
+            <Dependent Role="otdel1">
+              <PropertyRef Name="menegerid1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Etap_Sotrydniki">
+          <End Role="Sotrydniki" Type="Self.Sotrydniki" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Etap" Type="Self.Etap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sotrydniki">
+              <PropertyRef Name="IdSotr" />
+            </Principal>
+            <Dependent Role="Etap">
+              <PropertyRef Name="Otvetstvenniy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Etap_Zadacha">
+          <End Role="Zadacha" Type="Self.Zadacha" Multiplicity="0..1" />
+          <End Role="Etap" Type="Self.Etap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zadacha">
+              <PropertyRef Name="Idzadacha" />
+            </Principal>
+            <Dependent Role="Etap">
+              <PropertyRef Name="zadacha" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Otdel_Meneger">
+          <End Role="Meneger" Type="Self.Meneger" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Otdel" Type="Self.Otdel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meneger">
+              <PropertyRef Name="IdMeneger" />
+            </Principal>
+            <Dependent Role="Otdel">
+              <PropertyRef Name="menegerid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Otdel_Sotrydniki">
+          <End Role="Sotrydniki" Type="Self.Sotrydniki" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Otdel" Type="Self.Otdel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sotrydniki">
+              <PropertyRef Name="IdSotr" />
+            </Principal>
+            <Dependent Role="Otdel">
+              <PropertyRef Name="SotrydnikiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Otdel_Zadacha">
+          <End Role="Zadacha" Type="Self.Zadacha" Multiplicity="1" />
+          <End Role="Otdel" Type="Self.Otdel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zadacha">
+              <PropertyRef Name="Idzadacha" />
+            </Principal>
+            <Dependent Role="Otdel">
+              <PropertyRef Name="ZadachaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище agentstvoModelContainer">
+          <EntitySet Name="Etap" EntityType="Self.Etap" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Meneger" EntityType="Self.Meneger" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="meneger1" EntityType="Self.meneger1" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Otdel" EntityType="Self.Otdel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="otdel1" EntityType="Self.otdel1" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sotrydniki" EntityType="Self.Sotrydniki" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zadacha" EntityType="Self.Zadacha" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__otdel1__menegeri__4BAC3F29" Association="Self.FK__otdel1__menegeri__4BAC3F29">
+            <End Role="meneger1" EntitySet="meneger1" />
+            <End Role="otdel1" EntitySet="otdel1" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Etap_Sotrydniki" Association="Self.FK_Etap_Sotrydniki">
+            <End Role="Sotrydniki" EntitySet="Sotrydniki" />
+            <End Role="Etap" EntitySet="Etap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Etap_Zadacha" Association="Self.FK_Etap_Zadacha">
+            <End Role="Zadacha" EntitySet="Zadacha" />
+            <End Role="Etap" EntitySet="Etap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Otdel_Meneger" Association="Self.FK_Otdel_Meneger">
+            <End Role="Meneger" EntitySet="Meneger" />
+            <End Role="Otdel" EntitySet="Otdel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Otdel_Sotrydniki" Association="Self.FK_Otdel_Sotrydniki">
+            <End Role="Sotrydniki" EntitySet="Sotrydniki" />
+            <End Role="Otdel" EntitySet="Otdel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Otdel_Zadacha" Association="Self.FK_Otdel_Zadacha">
+            <End Role="Zadacha" EntitySet="Zadacha" />
+            <End Role="Otdel" EntitySet="Otdel" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="agentstvoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Etap">
+          <Key>
+            <PropertyRef Name="IdEtap" />
+          </Key>
+          <Property Name="IdEtap" Type="Int32" Nullable="false" />
+          <Property Name="naimenovanieEtap" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DataNachala" Type="DateTime" Precision="0" />
+          <Property Name="Vajnost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StepenGotovnosti" Type="Int32" Nullable="false" />
+          <Property Name="ObimRabot" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Otvetstvenniy" Type="Int32" />
+          <Property Name="zadacha" Type="Int32" />
+          <NavigationProperty Name="Sotrydniki" Relationship="Self.FK_Etap_Sotrydniki" FromRole="Etap" ToRole="Sotrydniki" />
+          <NavigationProperty Name="Zadacha1" Relationship="Self.FK_Etap_Zadacha" FromRole="Etap" ToRole="Zadacha" />
+        </EntityType>
+        <EntityType Name="Meneger">
+          <Key>
+            <PropertyRef Name="IdMeneger" />
+          </Key>
+          <Property Name="IdMeneger" Type="Int32" Nullable="false" />
+          <Property Name="Imya" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Familya" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Otchestvo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Otdel" Relationship="Self.FK_Otdel_Meneger" FromRole="Meneger" ToRole="Otdel" />
+        </EntityType>
+        <EntityType Name="meneger1">
+          <Key>
+            <PropertyRef Name="idmeneger1" />
+          </Key>
+          <Property Name="idmeneger1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="familia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="imya" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="otchestvo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="otdel1" Relationship="Self.FK__otdel1__menegeri__4BAC3F29" FromRole="meneger1" ToRole="otdel1" />
+        </EntityType>
+        <EntityType Name="Otdel">
+          <Key>
+            <PropertyRef Name="IdOtdel" />
+          </Key>
+          <Property Name="IdOtdel" Type="Int32" Nullable="false" />
+          <Property Name="ZadachaID" Type="Int32" Nullable="false" />
+          <Property Name="SotrydnikiId" Type="Int32" />
+          <Property Name="menegerid" Type="Int32" />
+          <Property Name="naimenovanie" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Meneger" Relationship="Self.FK_Otdel_Meneger" FromRole="Otdel" ToRole="Meneger" />
+          <NavigationProperty Name="Sotrydniki" Relationship="Self.FK_Otdel_Sotrydniki" FromRole="Otdel" ToRole="Sotrydniki" />
+          <NavigationProperty Name="Zadacha" Relationship="Self.FK_Otdel_Zadacha" FromRole="Otdel" ToRole="Zadacha" />
+        </EntityType>
+        <EntityType Name="otdel1">
+          <Key>
+            <PropertyRef Name="IDotdel1" />
+          </Key>
+          <Property Name="IDotdel1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="menegerid1" Type="Int32" Nullable="false" />
+          <Property Name="Naimenovanie1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="zadacha" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sotrydniki" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="meneger1" Relationship="Self.FK__otdel1__menegeri__4BAC3F29" FromRole="otdel1" ToRole="meneger1" />
+        </EntityType>
+        <EntityType Name="Sotrydniki">
+          <Key>
+            <PropertyRef Name="IdSotr" />
+          </Key>
+          <Property Name="IdSotr" Type="Int32" Nullable="false" />
+          <Property Name="Familia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Imya" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Otchestvo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Etap" Relationship="Self.FK_Etap_Sotrydniki" FromRole="Sotrydniki" ToRole="Etap" />
+          <NavigationProperty Name="Otdel" Relationship="Self.FK_Otdel_Sotrydniki" FromRole="Sotrydniki" ToRole="Otdel" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Zadacha">
+          <Key>
+            <PropertyRef Name="Idzadacha" />
+          </Key>
+          <Property Name="Idzadacha" Type="Int32" Nullable="false" />
+          <Property Name="DataPost" Type="DateTime" Precision="0" />
+          <Property Name="SrokVipl" Type="DateTime" Precision="0" />
+          <Property Name="naimenovanie" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Etap" Relationship="Self.FK_Etap_Zadacha" FromRole="Zadacha" ToRole="Etap" />
+          <NavigationProperty Name="Otdel" Relationship="Self.FK_Otdel_Zadacha" FromRole="Zadacha" ToRole="Otdel" />
+        </EntityType>
+        <Association Name="FK_Etap_Sotrydniki">
+          <End Role="Sotrydniki" Type="Self.Sotrydniki" Multiplicity="0..1" />
+          <End Role="Etap" Type="Self.Etap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sotrydniki">
+              <PropertyRef Name="IdSotr" />
+            </Principal>
+            <Dependent Role="Etap">
+              <PropertyRef Name="Otvetstvenniy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Etap_Zadacha">
+          <End Role="Zadacha" Type="Self.Zadacha" Multiplicity="0..1" />
+          <End Role="Etap" Type="Self.Etap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zadacha">
+              <PropertyRef Name="Idzadacha" />
+            </Principal>
+            <Dependent Role="Etap">
+              <PropertyRef Name="zadacha" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Otdel_Meneger">
+          <End Role="Meneger" Type="Self.Meneger" Multiplicity="0..1" />
+          <End Role="Otdel" Type="Self.Otdel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meneger">
+              <PropertyRef Name="IdMeneger" />
+            </Principal>
+            <Dependent Role="Otdel">
+              <PropertyRef Name="menegerid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__otdel1__menegeri__4BAC3F29">
+          <End Role="meneger1" Type="Self.meneger1" Multiplicity="1" />
+          <End Role="otdel1" Type="Self.otdel1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="meneger1">
+              <PropertyRef Name="idmeneger1" />
+            </Principal>
+            <Dependent Role="otdel1">
+              <PropertyRef Name="menegerid1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Otdel_Sotrydniki">
+          <End Role="Sotrydniki" Type="Self.Sotrydniki" Multiplicity="0..1" />
+          <End Role="Otdel" Type="Self.Otdel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sotrydniki">
+              <PropertyRef Name="IdSotr" />
+            </Principal>
+            <Dependent Role="Otdel">
+              <PropertyRef Name="SotrydnikiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Otdel_Zadacha">
+          <End Role="Zadacha" Type="Self.Zadacha" Multiplicity="1" />
+          <End Role="Otdel" Type="Self.Otdel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zadacha">
+              <PropertyRef Name="Idzadacha" />
+            </Principal>
+            <Dependent Role="Otdel">
+              <PropertyRef Name="ZadachaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="agentstvoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Etap" EntityType="Self.Etap" />
+          <EntitySet Name="Meneger" EntityType="Self.Meneger" />
+          <EntitySet Name="meneger1" EntityType="Self.meneger1" />
+          <EntitySet Name="Otdel" EntityType="Self.Otdel" />
+          <EntitySet Name="otdel1" EntityType="Self.otdel1" />
+          <EntitySet Name="Sotrydniki" EntityType="Self.Sotrydniki" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Zadacha" EntityType="Self.Zadacha" />
+          <AssociationSet Name="FK_Etap_Sotrydniki" Association="Self.FK_Etap_Sotrydniki">
+            <End Role="Sotrydniki" EntitySet="Sotrydniki" />
+            <End Role="Etap" EntitySet="Etap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Etap_Zadacha" Association="Self.FK_Etap_Zadacha">
+            <End Role="Zadacha" EntitySet="Zadacha" />
+            <End Role="Etap" EntitySet="Etap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Otdel_Meneger" Association="Self.FK_Otdel_Meneger">
+            <End Role="Meneger" EntitySet="Meneger" />
+            <End Role="Otdel" EntitySet="Otdel" />
+          </AssociationSet>
+          <AssociationSet Name="FK__otdel1__menegeri__4BAC3F29" Association="Self.FK__otdel1__menegeri__4BAC3F29">
+            <End Role="meneger1" EntitySet="meneger1" />
+            <End Role="otdel1" EntitySet="otdel1" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Otdel_Sotrydniki" Association="Self.FK_Otdel_Sotrydniki">
+            <End Role="Sotrydniki" EntitySet="Sotrydniki" />
+            <End Role="Otdel" EntitySet="Otdel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Otdel_Zadacha" Association="Self.FK_Otdel_Zadacha">
+            <End Role="Zadacha" EntitySet="Zadacha" />
+            <End Role="Otdel" EntitySet="Otdel" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище agentstvoModelContainer" CdmEntityContainer="agentstvoEntities">
+          <EntitySetMapping Name="Etap">
+            <EntityTypeMapping TypeName="agentstvoModel.Etap">
+              <MappingFragment StoreEntitySet="Etap">
+                <ScalarProperty Name="IdEtap" ColumnName="IdEtap" />
+                <ScalarProperty Name="naimenovanieEtap" ColumnName="naimenovanieEtap" />
+                <ScalarProperty Name="DataNachala" ColumnName="DataNachala" />
+                <ScalarProperty Name="Vajnost" ColumnName="Vajnost" />
+                <ScalarProperty Name="StepenGotovnosti" ColumnName="StepenGotovnosti" />
+                <ScalarProperty Name="ObimRabot" ColumnName="ObimRabot" />
+                <ScalarProperty Name="Otvetstvenniy" ColumnName="Otvetstvenniy" />
+                <ScalarProperty Name="zadacha" ColumnName="zadacha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Meneger">
+            <EntityTypeMapping TypeName="agentstvoModel.Meneger">
+              <MappingFragment StoreEntitySet="Meneger">
+                <ScalarProperty Name="IdMeneger" ColumnName="IdMeneger" />
+                <ScalarProperty Name="Imya" ColumnName="Imya" />
+                <ScalarProperty Name="Familya" ColumnName="Familya" />
+                <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="meneger1">
+            <EntityTypeMapping TypeName="agentstvoModel.meneger1">
+              <MappingFragment StoreEntitySet="meneger1">
+                <ScalarProperty Name="idmeneger1" ColumnName="idmeneger1" />
+                <ScalarProperty Name="familia" ColumnName="familia" />
+                <ScalarProperty Name="imya" ColumnName="imya" />
+                <ScalarProperty Name="otchestvo" ColumnName="otchestvo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Otdel">
+            <EntityTypeMapping TypeName="agentstvoModel.Otdel">
+              <MappingFragment StoreEntitySet="Otdel">
+                <ScalarProperty Name="IdOtdel" ColumnName="IdOtdel" />
+                <ScalarProperty Name="ZadachaID" ColumnName="ZadachaID" />
+                <ScalarProperty Name="SotrydnikiId" ColumnName="SotrydnikiId" />
+                <ScalarProperty Name="menegerid" ColumnName="menegerid" />
+                <ScalarProperty Name="naimenovanie" ColumnName="naimenovanie" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="otdel1">
+            <EntityTypeMapping TypeName="agentstvoModel.otdel1">
+              <MappingFragment StoreEntitySet="otdel1">
+                <ScalarProperty Name="IDotdel1" ColumnName="IDotdel1" />
+                <ScalarProperty Name="menegerid1" ColumnName="menegerid1" />
+                <ScalarProperty Name="Naimenovanie1" ColumnName="Naimenovanie1" />
+                <ScalarProperty Name="zadacha" ColumnName="zadacha" />
+                <ScalarProperty Name="sotrydniki" ColumnName="sotrydniki" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sotrydniki">
+            <EntityTypeMapping TypeName="agentstvoModel.Sotrydniki">
+              <MappingFragment StoreEntitySet="Sotrydniki">
+                <ScalarProperty Name="IdSotr" ColumnName="IdSotr" />
+                <ScalarProperty Name="Familia" ColumnName="Familia" />
+                <ScalarProperty Name="Imya" ColumnName="Imya" />
+                <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="agentstvoModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zadacha">
+            <EntityTypeMapping TypeName="agentstvoModel.Zadacha">
+              <MappingFragment StoreEntitySet="Zadacha">
+                <ScalarProperty Name="Idzadacha" ColumnName="Idzadacha" />
+                <ScalarProperty Name="DataPost" ColumnName="DataPost" />
+                <ScalarProperty Name="SrokVipl" ColumnName="SrokVipl" />
+                <ScalarProperty Name="naimenovanie" ColumnName="naimenovanie" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

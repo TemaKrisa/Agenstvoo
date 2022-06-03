@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="NavigationDrawerPopUpMenu2.UserControletaps"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NavigationDrawerPopUpMenu2"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="763.956">
+
+    <Grid Background="White">
+        <DataGrid x:Name="DGridAgenstvo" AutoGenerateColumns="False" Margin="0,0,-485,-212" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Наименование" Binding="{Binding naimenovanieEtap}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Дата начала" Binding="{Binding DataNachala}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Важность" Binding="{Binding Vajnost}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Степень готовности" Binding="{Binding StepenGotovnosti}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Объем работ" Binding="{Binding ObimRabot}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Ответсвенный" Binding="{Binding Sotrydniki.Familia}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Задача" Binding="{Binding Zadacha}"></DataGridTextColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Редактировать" Name="BtnEditEtaps" Click="BtnEditEtaps_Click"></Button>
+                        </DataTemplate>
+
+                    </DataGridTemplateColumn.CellTemplate>
+
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Добавить" Margin="0,348,0,52" Height="50" x:Name="AddEtaps" Click="AddEtaps_Click" Width="200"></Button>
+        <Button Content="Удалить" x:Name="DelateEtaps" Click="DelateEtaps_Click" Height="50" Margin="0,421,0,-21" Width="200"></Button>
+    </Grid>
+ 
+</UserControl>

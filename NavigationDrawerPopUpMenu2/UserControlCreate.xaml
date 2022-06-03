@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="NavigationDrawerPopUpMenu2.UserControlCreate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NavigationDrawerPopUpMenu2"
+             mc:Ignorable="d" 
+             >
+    <Grid Background="White" x:Name="GridMain"> 
+        <DataGrid x:Name="DGridAgenstvo" AutoGenerateColumns="False" Margin="0,0,-385,-100" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Имя" Binding="{Binding Imya}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Фамилия" Binding="{Binding Familya}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Отчество" Binding="{Binding Otchestvo}"></DataGridTextColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Редактировать" Name="BtnDeleteMen" Click="BtnDeleteMen_Click_1"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    
+                    
+                </DataGridTemplateColumn>
+
+               
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Добавить" Margin="0,300,0,52" Height="50" x:Name="AddMen" Click="AddMen_Click" HorizontalAlignment="Center" Width="200"/>
+        <Button Content="Удалить" x:Name="DelateMen" Click="DelateMen_Click" Height="50" Margin="0,350,0,20" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="200"/>
+
+    </Grid>
+</UserControl>
